@@ -1,0 +1,132 @@
+/*重置所有元素的内外边距*/
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* shift+tab 向前缩进*/
+body {
+    background: #f0f0f0; /* 0~f 16进制颜色编码 */
+}
+
+.login {
+    /* 定位 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -150px 0 0 -225px; /*设置外边距*/
+    width: 450px;
+    height: 300px;
+    background: #fff;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2); /*盒子阴影*/
+}
+
+.login-title {
+    height: 49px;
+    line-height: 49px;
+    text-align: center; /*文本居中*/
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.login-title > h2 {
+    display: inline-block; /*设置元素为行内块元素*/
+    height: 45px;
+    font-size: 18px; /*字体大小*/
+    font-weight: 100; /*设置字体粗细度*/
+    border-bottom: 4px solid #888;
+}
+
+/*****登录框表单交互样式*****/
+.login-form {
+    padding: 20px 0; /*设置元素内边距*/
+    box-sizing: border-box; /*固定盒子大小*/
+}
+
+.login-form > form {
+    display: inline-block;
+    margin-left: 60px;
+    width: 330px;
+}
+
+.input-group {
+    margin-top: 20px;
+    width: 328px;
+    height: 33px;
+    color: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px; /*设置边框半径:圆角*/
+}
+
+.login-icon {
+    float: left;
+    width: 33px;
+    height: 33px;
+    line-height: 33px !important;
+    text-align: center;
+}
+
+.input-txt {
+    width: 280px;
+    height: 33px;
+    border: 0; /*去除边框*/
+    outline: none; /*去除浏览器自带的外边框(聚焦)*/
+}
+
+/*伪对象选择器 设置占位符样式*/
+::placeholder {
+    color: rgba(0, 0, 0, 0.2);
+}
+
+/*选中所有a元素*/
+a {
+    text-decoration: none; /*去除文本装饰(下划线)*/
+    color: rgba(0, 0, 0, 0.2);
+}
+
+.remember {
+    height: 50px;
+    line-height: 50px;
+}
+
+.remember > * {
+    float: left;
+    margin-right: 5px;
+}
+
+.remember-txt {
+    font-size: 12px;
+    color: #658754;
+}
+
+/* 按钮区域样式 */
+.btn-box {
+    height: 30px;
+}
+
+.btn-login {
+    width: 120px;
+    height: 30px;
+    border: 0;
+    color: #fff;
+    background: #658754;
+    border-radius: 5px;
+    cursor: pointer; /*设置鼠标指针样式*/
+}
+
+/* 伪类选择器 */
+.btn-login:hover {
+    background: #1AA034;
+}
+
+.remember input {
+    margin-top: 19px;
+}
+
+.btn-box a{
+	margin-right: 240px;
+}
+#error{
+    display: none;
+    text-align: center;
+    color:red;
+}

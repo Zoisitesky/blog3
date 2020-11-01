@@ -1,0 +1,18 @@
+input.error { border: 1px solid red; }
+label.error {
+    background:url("../js/jquery-validation-1.14.0/demo/images/unchecked.gif") no-repeat 0px 0px;
+
+    padding-left: 16px;
+
+    padding-bottom: 2px;
+
+    font-weight: bold;
+
+    color: #ea060d;
+
+    vertical-align:middle;
+
+}
+label.checked {
+    background:url("../js/jquery-validation-1.14.0/demo/images/checked.gif") no-repeat 0px 0px;
+}

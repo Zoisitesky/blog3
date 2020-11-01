@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>易书博客后台管理-用户登录</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/login.css"/>
+    <!-- 导入font-awesome字体图标库 -->
+    <link rel="stylesheet" type="text/css" href="/static/asserts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+</head>
+<body>
+<div class="login">
+    <div class="login-title">
+        <h2>易书博客用户登录</h2>
+    </div>
+    <div class="login-form">
+        <form action="login.action" method="post" id="form">
+            <input type="text" id="change" name="change" value="false" hidden/>
+            <div class="input-group">
+                <i class="login-icon fa fa-user"></i>
+                <input type="text" id="username" name="username" class="input-txt" placeholder="用户名">
+            </div>
+            <div class="input-group">
+                <i class="login-icon fa fa-lock"></i>
+                <input type="password" id="password" name="password" class="input-txt" placeholder="密码">
+            </div>
+            <!-- 记住账号密码 -->
+            <div class="remember">
+                <input type="checkbox" name="remember" id="remember">
+                <span class="remember-txt">记住我</span>
+            </div>
+            <div>
+                <span id="error">用户名或密码错误</span>
+            </div>
+            <div class="btn-box">
+                <input type="submit" value="登   录">
+            </div>
+        </form>
+    </div>
+</div>
+<!-- 引入jQuery库 -->
+<script src="/static/js/jquery-3.2.1.min.js"></script>
+<!-- 引入layerJS库 -->
+<script src="/static/asserts/layer/layer.js"></script>
+<link href="/static/css/validate.css" rel="stylesheet" type="text/css">
+<script src="/static/js/jquery-validation-1.14.0/dist/jquery.validate.js"></script>
+<script src="/static/js/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+<script type="text/javascript">
+    $(function () {
+        let info="";
+        if (info !== "") {
+            $("#remember").prop("checked", "true");
+        }
+        let arr = info.split("__");
+        $("#username").val(arr[0]);
+        $("#password").val(arr[1]);
+        $("#username, #password").change(function () {
+            $("#change").val("true");
+        })
+    });
+    $("#form").validate({
+        rules:{
+            username:{
+                required:true,
+            },
+            password:{
+                required:true,
+            },
+        },
+        messages:{
+            username:{
+                required:"用户名不能为空",
+            },
+            password:{
+                required: "密码不能为空",
+            },
+        },
+        errorPlacement: function (error, element) {
+            $(element).parent().after(error);
+        },
+        wrapper:"div",
+
+    })
+</script>
+</body>
+</html>

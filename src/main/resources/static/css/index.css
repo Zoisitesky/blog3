@@ -1,0 +1,170 @@
+h1,h2,h3,h4,h5,h6,ul{
+	padding: 0;
+	margin: 0;
+	outline: none;
+}
+body{
+	background: #efefef;
+}
+.top-active{
+	color:#3498db !important;
+}
+/* 顶部菜单 */
+.top-bar{
+	position:absolute;
+	left:0;
+	right: 0;
+	z-index: 9999;
+	background: transparent;
+	border: none;
+	color:#fff;
+}
+.top-bar a{
+	font-size: 1.1em;
+}
+
+.nav>li>a{
+	background: transparent;
+}
+
+/* 轮播区域 */
+#main-banner{
+	height: 400px;
+	overflow: hidden;
+}
+
+#main-banner img{
+	filter:blur(5px);
+}
+
+#main-banner .carousel-caption{
+	position: absolute;
+	top:150px;
+}
+
+.carousel-control{
+	display: none;
+	background: none !important;
+}
+
+/* 博客列表区域 */
+.blog-list{
+	padding:20px 10px;
+	overflow: hidden;
+}
+
+ul{
+	list-style: none;
+}
+.list-item{
+	padding:15px;
+	margin-bottom: 20px;
+	height: 150px;
+	background: #fff;
+	color:#797b7c;
+	overflow: hidden;
+	box-shadow: 5px 5px 5px rgba(0,0,0,0.1) ;
+}
+.list-item i{
+	display: block;
+	float:right;
+	margin-left:10px;
+	width: 150px;
+}
+.list-item p{
+	margin: 20px 0 0 0;
+    line-height: 22px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+}
+
+.list-item>h3>a{
+	font-size:16px;
+	font-weight: bold;
+	color:#000;
+}
+.list-item>h3>a:hover{
+	color:#34495e;
+}
+
+/* 博主,标签,排行，二维码等信息 */
+.info{
+	margin:20px 0;
+	overflow: hidden;
+}
+.info>div{
+	margin-bottom: 20px;
+	background: rgba(255,255,255,0.5);
+	overflow: hidden;
+}
+.info h3{
+	padding:0 10px;
+	height: 30px;
+	line-height: 30px;
+	font-size: 16px;
+	font-weight: bold;
+	background: #fff;
+}
+.info .details{
+	padding:20px;
+	overflow: hidden;
+}
+.headicon{
+	display: inline-block;
+	width: 80px;
+	height: 80px;
+	margin-bottom:20px;
+	text-align: center;
+}
+.user-info .details{
+	text-align: center;
+}
+.user-info .details p{
+	font-size: 14px;
+}
+/* 标签 */
+.tags .details a{
+	display: inline-block;
+	margin-bottom: 10px;
+}
+/* 排行 */
+.rank ul li{
+	line-height: 25px;
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+/* 友情链接 */
+.friend-link ul li{
+	line-height: 30px;
+}
+/* 二维码 */
+.qrcode img{
+	max-height:300px;
+}
+
+/* 版权区域 */
+.copy{
+	text-align: center;
+	line-height: 50px;
+}
+
+/*返回顶部*/
+.backtop{
+	position: fixed;
+	display: none;
+	right: 20px;
+	bottom: 20px;
+	width: 60px;
+	height: 60px;
+	text-align: center;
+	line-height: 60px;
+	font-size: 1.5em;
+	color:#fff;
+	background: #3498db;
+	cursor:pointer;
+}
+.backtop:hover{
+	background: #2980b9;
+}

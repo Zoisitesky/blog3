@@ -1,0 +1,14 @@
+.blog-details{
+	margin-top:20px;
+	padding:20px 10px;
+	background: #efefef;
+	overflow: hidden;
+}
+.blog-details button{
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+}
+.blog-details button span{
+	font-size: 1.5em;
+}
+.comment{
+}

@@ -1,0 +1,31 @@
+.comment ul li{
+	margin-bottom:10px;
+}
+.comment .comment-item{
+	padding: 5px;
+	background: #fff;
+	box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
+	overflow: hidden;
+}
+.item-title img{
+	margin:10px;
+}
+.item-title{
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	color:rgba(0,0,0,0.5);
+	border-right: 1px solid rgba(0,0,0,0.1);
+}
+
+.time{
+	margin-top: 20px;
+}
+.praise{
+	font-size: 1.5em;
+}
+
+.send-msg{
+	padding:20px;
+	background: #fff;
+}

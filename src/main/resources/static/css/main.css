@@ -1,0 +1,91 @@
+/* 重置部分控件圆角边框 */
+.list-group *,
+.navbar,
+.panel,
+.pagination,
+.breadcrumb,
+input,
+button,
+a
+{
+	border-radius: 0 !important;
+}
+
+.body{
+	position: absolute;
+	top:52px;
+	left:0;
+	right: 0;
+	bottom: 0;
+	min-width: 1000px;
+}
+.left,
+.right{
+	position: relative;
+	float: left;
+	height:100%;
+	box-sizing: border-box;
+}
+.left{
+	width:20%;
+	min-width: 200px;
+	background: #f8f8f8;
+}
+.right{
+	width: 80%;
+	min-width: 800px;
+}
+.copy{
+	position: absolute;
+	left:0;
+	right: 0;
+	bottom: 0;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	font-size:0.8em;
+}
+.user-info{
+	padding:10px 0;
+}
+.user-info,
+.info-name
+{
+	text-align: center;
+	font-weight: bold;
+	background: #888;
+	color:#f8f8f8;
+}
+.info-icon{
+	padding:10px 0;
+}
+
+
+/* 主页统计信息 */
+.count{
+	text-align: center;
+}
+.count-item{
+	float: left;
+	margin: 0 20px 20px 0;
+	padding:10px;
+	width:22%;
+	color:#fff;
+	border:1px solid #fff;
+	background: #337ab7;
+	cursor: pointer;
+}
+.count-item:hover{
+	background: #2e6da4;
+}
+.number{
+	font-size: 1.5em;
+}
+.count~*{
+	clear: both;
+}
+
+.layui-table-cell .layui-form-checkbox[lay-skin="primary"]{
+	 top: 50%;
+	 transform: translateY(-50%);
+ }
