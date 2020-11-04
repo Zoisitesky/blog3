@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>个人设置</title>
+    <link rel="stylesheet" type="text/css"
+          href="/static/asserts/bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet"
+          href="/static/asserts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <style>
+        .zoomImage {
+            max-height: 100px;
+        }
+
+        .password {
+            width: 80px;
+            height: 30px;
+            line-height: 30px;
+            background-color: #1e88e5;
+            color: white;
+            font-size: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="head" th:replace="user/frameHead :: frameHead"></div>
+
+
+<div class="body">
+    <!-- 侧边栏 -->
+    <div id="body" th:replace="user/frameBody :: frameBody"></div>
+
+    <!-- 内容展示区 -->
+    <div class="right">
+        <ol class="breadcrumb">
+            <li><i class="fa fa-gear"></i> 个人设置</li>
+        </ol>
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>个人信息修改</strong>
+                </div>
+                <div class="panel-body">
+                    <form action="userUpdate.action" class="form col-xs-6 col-xs-offset-3" method="post" id="form"
+                          enctype="multipart/form-data">
+                        <input type="text" name="id" value="${user.id}" hidden>
+                        <div class="form-group">
+                            <label>头像设置</label>
+                            <input type="file" id="headIcon" name="headIcon"/>
+                            <br/>
+                            <img src="/static/img/headicon/${user.headIcon}"
+                                 id="preview-headIcon" class="zoomImage" alt=""/>
+                        </div>
+                        <div class="form-group">
+                            <label>二维码设置</label>
+                            <input type="file" id="wxCode" name="wxCode"/>
+                            <br/>
+                            <img src="/static/img/wxcode/${user.wxCode}"
+                                 id="preview-wxCode" class="zoomImage" alt=""/>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only">账号</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                </div>
+                                <input type="text" class="form-control" disabled readonly
+                                       placeholder="${user.username}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only">昵称</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-tag"></span>
+                                </div>
+                                <input type="text" name="nickname" class="form-control" placeholder="请输入昵称"
+                                       value="${user.nickname}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only">手机号码</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-phone-alt"></span>
+                                </div>
+                                <input type="text" name="phone" class="form-control" placeholder="请输入手机号"
+                                       value="${user.phone}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only">邮箱地址</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-envelope"></span>
+                                </div>
+                                <input type="text" name="email" class="form-control" placeholder="请输入邮箱地址"
+                                       value="${user.email}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only">个人简介</label>
+                            <textarea name="summary" class="form-control" placeholder="请输入个人简介" id="summary"
+                                      rows="5">${user.summary}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit" id="submit">修改</button>
+                            <button class="btn btn-danger" type="reset">重置</button>
+                            <a href="getPasswordPage.action" style="margin-left: 340px"><label class="password">修改密码</label></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 		js插件 -->
+<script src="/static/js/jquery-3.2.1.min.js"></script>
+<script src="/static/asserts/layer/layer.js"></script>
+<script src="/static/asserts/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="/static/js/comm.js"></script>
+<script>
+    $(function () {
+        //图片预览
+        $('#headIcon,#wxCode').on('change', function () {
+            var that = $(this);
+            var reader = new FileReader();
+            //读取图片文件
+            reader.readAsDataURL($(this).get(0).files[0]);
+            //当图片文件被加载时获取资源(base64编码)
+            reader.onload = function (e) {
+                $('#preview-' + that.attr('id')).attr('src', e.target.result);
+            }
+        });
+
+        $("#submit").click(function () {
+            if (validateForm().form()) {
+                var formData = new FormData($("#form")[0]);
+                $.ajax({
+                    type: "POST",
+                    url: "userUpdate.action",
+                    data: formData,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        layer.msg('修改成功!', {
+                            icon: 1,
+                            time: 1000
+                        });
+                        $("div[class='info-name']").text(data.nickname);
+                        if (data.headIcon != null) {
+                            $("img[class='img-circle']").attr("src","/static/img/headicon/"+data.headIcon);
+                        }
+                    },
+                    error: function () {
+                        layer.msg('修改失败!', {
+                            icon: 2,
+                            time: 1000
+                        });
+                    }
+                });
+            } else {
+            }
+        });
+
+
+        jQuery.validator.addMethod("isPhone", function (value, element) {
+            var tel = /^[1][3456789][0-9]{9}$/;
+            return this.optional(element) || (tel.test(value));
+        }, "请正确填写您的手机号");
+        jQuery.validator.addMethod("isEmail", function (value, element) {
+            var tel = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+            return this.optional(element) || (tel.test(value));
+        }, "请正确填写您的邮箱");
+    });
+</script>
+</body>
+</html>
+

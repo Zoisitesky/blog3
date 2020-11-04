@@ -13,7 +13,11 @@ function logout(){
 		btn:['确认','取消'],   //配置按钮
 		icon:3				 //配置图标
 	},function(){
-		location.href='/blog/user/loginOut.action';
+		$.post("/user/loginOut.action", function (msg) {
+			if (msg.code === 0) {
+				location.replace("/user/index");
+			}
+		});
 	});
 }
 function ChangeDateFormat(time) {

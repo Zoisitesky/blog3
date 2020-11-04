@@ -1,5 +1,6 @@
 package com.jdch.blog3.config;
 
+import com.jdch.blog3.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
 
@@ -23,6 +24,7 @@ public class SpringMvcConfig implements WebMvcConfigurer {
         registry.addViewController("index").setViewName("index");
         registry.addViewController("login").setViewName("login");
         registry.addViewController("user/index").setViewName("user/index");
+        registry.addViewController("user/settings").setViewName("user/settings");
     }
 
     /*
@@ -44,9 +46,9 @@ public class SpringMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //添加登录拦截器
-//        LoginHandleInterceptor loginHandleInterceptor = new LoginHandleInterceptor();
-//        registry.addInterceptor(loginHandleInterceptor)
-//                .addPathPatterns("/userinfo","/updatepwd").excludePathPatterns("/layui/**");
+        LoginInterceptor loginInterceptor = new LoginInterceptor();
+        registry.addInterceptor(loginInterceptor)
+                .addPathPatterns("/user/**").excludePathPatterns("/layui/**");
         //添加订单拦截器
 //        OrderHandleIntegerceptor orderHandleIntegerceptor = new OrderHandleIntegerceptor();
 //        registry.addInterceptor(orderHandleIntegerceptor).addPathPatterns("/car_checkout","/car_accessories");

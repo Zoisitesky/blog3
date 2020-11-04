@@ -1,5 +1,7 @@
 package com.jdch.blog3.service;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * description:用户service接口
  *
@@ -10,8 +12,8 @@ public interface UserService {
 
     /*
      * @Description: 用户登录
-     * @Param: [username, password]
+     * @Param: [username, password, remember, request]
      * @return: boolean
      */
-    public boolean login(String username, String password);
+    public boolean login(String username, String password, String remember, HttpServletRequest request);
 }
