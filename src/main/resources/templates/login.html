@@ -32,7 +32,8 @@
                 </div>
             </div>
             <!-- 记住账号密码 -->
-            <input type="checkbox" name="remember" checked=""  lay-skin="primary"  title="记住密码">
+            <input type="checkbox" name="remember"  lay-skin="primary"  title="记住密码">
+            <input type="hidden" name="change" value="1">
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button type="submit" class="layui-btn" lay-submit lay-filter="login">登录</button>
@@ -49,6 +50,22 @@
 <link href="/static/css/validate.css" rel="stylesheet" type="text/css">
 <script src="/static/js/jquery-validation-1.14.0/dist/jquery.validate.js"></script>
 <script src="/static/js/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+<script th:inline="javascript">
+    $(function(){
+        var cookies = [[${#request.getCookies()}]];
+        for (let i=0; i<cookies.length;i++) {
+            if (cookies[i].name === "blog_remember") {
+                let message = cookies[i].value;
+                $("#username").val(message.split("@@@")[0]);
+                $("#password").val(message.split("@@@")[1]);
+                $("input[name='remember']").prop("checked","true");
+            }
+        }
+        $("input[name='password']").change(function(){
+            $("input[name='change']").val("0");
+        })
+    });
+</script>
 <script type="text/javascript">
     layui.use('form', function(){
         var form = layui.form;
