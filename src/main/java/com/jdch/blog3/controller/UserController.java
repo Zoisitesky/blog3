@@ -3,11 +3,11 @@ package com.jdch.blog3.controller;
 import com.jdch.blog3.entity.User;
 import com.jdch.blog3.model.ResultModel;
 import com.jdch.blog3.service.UserService;
+import com.jdch.blog3.util.FileUtils;
 import com.jdch.blog3.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -69,12 +69,48 @@ public class UserController {
      * @return: com.jdch.blog3.model.ResultModel<java.lang.String>
      */
     @RequestMapping(value = "user/loginOut.action", method = RequestMethod.POST)
-    public ResultModel<String> indexHtml(HttpServletRequest request) {
+    public ResultModel<String> loginOut(HttpServletRequest request) {
         ResultModel<String> model = new ResultModel<>();
         HttpSession session = request.getSession();
         session.removeAttribute("user");
         model.setCode(0);
         model.setMessage("登出成功");
+        return model;
+    }
+
+    /*
+     * @Description: 修改用户信息
+     * @Param: [user]
+     * @return: com.jdch.blog3.model.ResultModel<java.lang.String>
+     */
+    @RequestMapping(value = "user/userUpdate.action", method = RequestMethod.POST)
+    public ResultModel<User> update(@RequestParam("id") String id, @RequestParam("nickname") String nickname, @RequestParam("email") String email,
+                       @RequestParam("phone") String phone, @RequestParam("summary") String summary, HttpServletRequest request,
+                       @RequestParam("headIcon") MultipartFile headIcon, @RequestParam("wxCode") MultipartFile wxCode) {
+        ResultModel<User> model = new ResultModel<>();
+        User user = new User();
+        user.setId(Integer.parseInt(id));
+        user.setNickname(nickname);
+        user.setEmail(email);
+        user.setPhone(phone);
+        user.setSummary(summary);
+        String upload = FileUtils.upload(request, wxCode, "/static/img/wxcode/");
+        if (upload != null) {
+            user.setWxCode(upload);
+        }
+        String upload1 = FileUtils.upload(request, headIcon, "/static/img/headicon/");
+        if (upload1 != null) {
+            user.setHeadIcon(upload1);
+        }
+        boolean update = userService.update(user, request);
+        if (update) {
+            model.setCode(0);
+            model.setT(user);
+            model.setMessage("修改成功");
+        }else{
+            model.setCode(1);
+            model.setMessage("修改失败");
+        }
         return model;
     }
 }

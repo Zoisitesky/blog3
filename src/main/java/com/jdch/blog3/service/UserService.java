@@ -19,4 +19,11 @@ public interface UserService {
      * @return: boolean
      */
     public boolean login(User user, HttpServletRequest request, HttpServletResponse response);
+
+    /*
+     * @Description: 修改用户信息
+     * @Param: [user, request]
+     * @return: boolean
+     */
+    public boolean update(User user, HttpServletRequest request);
 }

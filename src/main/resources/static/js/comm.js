@@ -15,7 +15,7 @@ function logout(){
 	},function(){
 		$.post("/user/loginOut.action", function (msg) {
 			if (msg.code === 0) {
-				location.replace("/user/index");
+				location.replace("/user/index.html");
 			}
 		});
 	});

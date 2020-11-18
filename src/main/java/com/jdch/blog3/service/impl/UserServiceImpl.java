@@ -57,4 +57,18 @@ public class UserServiceImpl implements UserService {
         }
         return flag;
     }
+
+    @Override
+    public boolean update(User user, HttpServletRequest request) {
+        boolean flag = false;
+        //修改用户信息,通过用户id获取新的用户信息
+        int i = userMapper.updateByPrimaryKeySelective(user);
+        User select = userMapper.selectByPrimaryKey(user.getId());
+        if (i>0) {
+            flag = true;
+            HttpSession session = request.getSession();
+            session.setAttribute("user", select);
+        }
+        return flag;
+    }
 }

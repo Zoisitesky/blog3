@@ -8,18 +8,14 @@
     <link rel="stylesheet"
           href="/static/asserts/font-awesome-4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/css/layui/css/modules/layer/default/layer.css" media="all">
     <style>
         .zoomImage {
             max-height: 100px;
         }
-        .password {
-            width: 80px;
-            height: 30px;
-            line-height: 30px;
-            background-color: #1e88e5;
-            color: white;
-            font-size: 15px;
-            text-align: center;
+        a:hover{
+            text-decoration: none;
         }
     </style>
 </head>
@@ -42,19 +38,20 @@
                     <strong>个人信息修改</strong>
                 </div>
                 <div class="panel-body" th:object="${session.user}">
-                    <form action="userUpdate.action" class="layui-form form col-xs-6 col-xs-offset-3" method="post" id="form"
+                    <form  class="layui-form form col-xs-6 col-xs-offset-3"  id="form"
                           enctype="multipart/form-data">
                         <input type="text" name="id" th:value="*{id}" hidden>
+
                         <div class="form-group">
                             <label for="headIcon">头像设置</label>
-                            <input type="file" id="headIcon" />
+                            <input type="file" id="headIcon" name="headIcon" />
                             <br/>
                             <img th:src="*{'/static/img/headicon/'+headIcon}"
                                  id="preview-headIcon" class="zoomImage" alt=""/>
                         </div>
                         <div class="form-group">
                             <label for="wxCode">二维码设置</label>
-                            <input type="file" id="wxCode" />
+                            <input type="file" id="wxCode" name="wxCode" />
                             <br/>
                             <img th:src="*{'/static/img/wxcode/'+wxCode}"
                                  id="preview-wxCode" class="zoomImage" alt=""/>
@@ -76,7 +73,7 @@
                                     <span class="glyphicon glyphicon-tag"></span>
                                 </div>
                                 <input type="text" name="nickname" class="form-control" placeholder="请输入昵称"
-                                       th:value="*{nickname}"/>
+                                       lay-verify="required" lay-reqtext="昵称不能空？" th:value="*{nickname}"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -86,7 +83,7 @@
                                     <span class="glyphicon glyphicon-phone-alt"></span>
                                 </div>
                                 <input type="text" name="phone" class="form-control" placeholder="请输入手机号"
-                                       th:value="*{phone}"/>
+                                       lay-verify="required|phone"   th:value="*{phone}"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -96,7 +93,7 @@
                                     <span class="glyphicon glyphicon-envelope"></span>
                                 </div>
                                 <input type="text" name="email" class="form-control" placeholder="请输入邮箱地址"
-                                       th:value="*{email}"/>
+                                       lay-verify="email"  th:value="*{email}"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -105,9 +102,9 @@
                                       rows="5">[[*{summary}]]</textarea>
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-primary" lay-submit lay-filter="submit" type="submit" id="submit">修改</button>
-                            <button class="btn btn-danger" type="reset">重置</button>
-                            <a href="password.html" style="margin-left: 340px"><label class="password">修改密码</label></a>
+                            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="submit" type="submit" id="submit">修改</button>
+                            <button class="layui-btn layui-btn-danger" type="reset">重置</button>
+                            <a href="password.html" class="layui-btn" style="float:right;display:block;" >修改密码</a>
                         </div>
                     </form>
                 </div>
@@ -118,6 +115,7 @@
 
 
 <!-- 		js插件 -->
+<script src="/static/css/layui/layui.js" charset="utf-8"></script>
 <script src="/static/js/jquery-3.2.1.min.js"></script>
 <script src="/static/asserts/layer/layer.js"></script>
 <script src="/static/asserts/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
@@ -135,49 +133,37 @@
                 $('#preview-' + that.attr('id')).attr('src', e.target.result);
             }
         });
-
-        $("#submit").click(function () {
-            if (validateForm().form()) {
-                var formData = new FormData($("#form")[0]);
-                $.ajax({
-                    type: "POST",
-                    url: "userUpdate.action",
-                    data: formData,
-                    cache: false,
-                    processData: false,
-                    contentType: false,
-                    success: function (data) {
-                        layer.msg('修改成功!', {
-                            icon: 1,
-                            time: 1000
-                        });
-                        $("div[class='info-name']").text(data.nickname);
-                        if (data.headIcon != null) {
-                            $("img[class='img-circle']").attr("src","/static/img/headicon/"+data.headIcon);
-                        }
-                    },
-                    error: function () {
-                        layer.msg('修改失败!', {
-                            icon: 2,
-                            time: 1000
-                        });
-                    }
-                });
-            } else {
-            }
-        });
     });
 
     layui.use('form', function(){
         var form = layui.form;
         form.on('submit(submit)', function(data){
-            $.post("/login.action",data.field,function (msg){
-                if(msg.code===1){
-                    layer.msg('用户名或密码错误!', {icon: 5, time: 1000});
-                }else{
-                    location.href="/user/index";
+            var formData = new FormData($("#form")[0]);
+            $.ajax({
+                type: "POST",
+                url: "userUpdate.action",
+                data: formData,
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if(data.code===0){
+                        layer.msg('修改成功!', {icon: 1, time: 1000});
+                        $("div[class='info-name']").text(data.t.nickname);
+                        if (data.headIcon != null) {
+                            $("img[class='img-circle']").attr("src","${pageContext.request.contextPath}/static/img/headicon/"+data.t.headIcon);
+                        }
+                    }else{
+                        layer.msg('修改失败!', {icon: 5, time: 1000});
+                    }
+                },
+                error: function () {
+                    layer.msg('修改失败!', {
+                        icon: 5,
+                        time: 1000
+                    });
                 }
-            })
+            });
             return false;
         });
     });
