@@ -113,4 +113,54 @@ public class UserController {
         }
         return model;
     }
+
+    /*
+     * @Description: 验证密码
+     * @Param: [request]
+     * @return: com.jdch.blog3.model.ResultModel<java.lang.String>
+     */
+    @RequestMapping(value = "user/checkPassword.action", method = RequestMethod.POST)
+    public ResultModel<String> checkPassword(User user) {
+        ResultModel<String> model = new ResultModel<>();
+        user.setPassword(MD5Util.encrypt(user.getPassword()));
+        boolean flag = userService.checkPassword(user);
+        if (flag) {
+            model.setCode(0);
+            model.setMessage("密码正确");
+        }else{
+            model.setCode(1);
+            model.setMessage("密码错误");
+        }
+        return model;
+    }
+
+    /*
+     * @Description: 修改密码
+     * @Param: [user, request, response]
+     * @return: com.jdch.blog3.model.ResultModel<java.lang.String>
+     */
+    @RequestMapping(value = "user/updatePassword.action", method = RequestMethod.POST)
+    public ResultModel<String> updatePassword(User user, HttpServletRequest request, HttpServletResponse response) {
+        ResultModel<String> model = new ResultModel<>();
+        user.setPassword(MD5Util.encrypt(user.getPassword()));
+        boolean flag = userService.updatePassword(user);
+        if (flag) {
+            //密码修改成功移除账号密码cookie
+            Cookie[] cookies = request.getCookies();
+            for (Cookie cookie : cookies) {
+                if ("blog_remember".equals(cookie.getName())) {
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                }
+            }
+            HttpSession session = request.getSession();
+            session.removeAttribute("user");
+            model.setCode(0);
+            model.setMessage("修改密码成功");
+        }else{
+            model.setCode(1);
+            model.setMessage("修改密码失败");
+        }
+        return model;
+    }
 }

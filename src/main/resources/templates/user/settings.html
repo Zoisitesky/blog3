@@ -151,7 +151,7 @@
                         layer.msg('修改成功!', {icon: 1, time: 1000});
                         $("div[class='info-name']").text(data.t.nickname);
                         if (data.headIcon != null) {
-                            $("img[class='img-circle']").attr("src","${pageContext.request.contextPath}/static/img/headicon/"+data.t.headIcon);
+                            $("img[class='img-circle']").attr("src","/static/img/headicon/"+data.t.headIcon);
                         }
                     }else{
                         layer.msg('修改失败!', {icon: 5, time: 1000});

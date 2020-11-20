@@ -26,4 +26,18 @@ public interface UserService {
      * @return: boolean
      */
     public boolean update(User user, HttpServletRequest request);
+
+    /*
+     * @Description: 验证用户密码
+     * @Param: [user]
+     * @return: boolean
+     */
+    public boolean checkPassword(User user);
+
+    /*
+     * @Description: 修改用户密码
+     * @Param: [user]
+     * @return: boolean
+     */
+    public boolean updatePassword(User user);
 }

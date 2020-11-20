@@ -6,6 +6,7 @@ import com.jdch.blog3.mapper.UserMapper;
 import com.jdch.blog3.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -68,6 +69,26 @@ public class UserServiceImpl implements UserService {
             flag = true;
             HttpSession session = request.getSession();
             session.setAttribute("user", select);
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean checkPassword(@RequestBody User user) {
+        boolean flag = false;
+        User select = userMapper.selectByPrimaryKey(user.getId());
+        if (user.getPassword().equals(select.getPassword())) {
+            flag = true;
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean updatePassword(User user) {
+        boolean flag = false;
+        int i = userMapper.updateByPrimaryKeySelective(user);
+        if (i>0) {
+            flag = true;
         }
         return flag;
     }
